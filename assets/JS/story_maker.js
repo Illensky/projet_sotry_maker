@@ -38,22 +38,30 @@ let verbs = [
     " se bat contre le bestial"
 ]
 
-let alea = -1
+let alea = -1;
+let alreadyOneSentence = 0;
 
 function aleaGenerator (){
     let newAlea = Math.round(Math.random() * 4)
     if (alea === newAlea){
-        aleaGenerator()
+        aleaGenerator();
     }
     else {
-        alea = newAlea
+        alea = newAlea;
     }
-    return alea
+    return alea;
 }
 
 document.getElementById("valid").addEventListener("click", function (){
-    alea = aleaGenerator()
+    let newP = document.createElement("p")
+    if (alreadyOneSentence === 1) {
+        newP.innerHTML = "et " + document.getElementById("userName").value + verbs[aleaGenerator()] + names[aleaGenerator()] + objects[aleaGenerator()] + places[aleaGenerator()] + temperatures[aleaGenerator()];
+    }
+    if (alreadyOneSentence === 0) {
+        newP.innerHTML = document.getElementById("userName").value + verbs[aleaGenerator()] + names[aleaGenerator()] + objects[aleaGenerator()] + places[aleaGenerator()] + temperatures[aleaGenerator()];
+        alreadyOneSentence = 1;
+    }
     if (document.getElementById("userName").value !== "") {
-        document.getElementById("story").innerHTML = document.getElementById("userName").value + verbs[alea] + names[alea] + objects[alea] + places[alea] + temperatures[alea]
+        document.getElementById("story").appendChild(newP);
     }
 })
